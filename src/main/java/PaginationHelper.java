@@ -12,6 +12,9 @@ public class PaginationHelper {
     if (elements == null || elements.length == 0) {
       throw new Exception("Elements can't be 0");
     }
+    if (elementPerPage == 0) {
+      throw new Exception("Page size cannot be 0");
+    }
     this.elements = elements;
     this.elementPerPage = elementPerPage;
   }
@@ -36,7 +39,7 @@ public class PaginationHelper {
    * @return total elements for the page requested
    */
   public int pageItemCount(int pageNumber) {
-    if (pageNumber >= pageCount()) {
+    if (pageNumber >= pageCount() || pageNumber < 0) {
       return -1;
     }
     int start = pageNumber * elementPerPage;
@@ -59,6 +62,6 @@ public class PaginationHelper {
     if (index < 0 || index >= itemCount()) {
       return -1;
     }
-    return (int)Math.floor(index/elementPerPage);
+    return (int)Math.floor(index * 1.0 /elementPerPage);
   }
 }
